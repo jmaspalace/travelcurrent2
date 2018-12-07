@@ -1,0 +1,4 @@
+name = Hubspot connect
+description = Conecta los envíos de webform con hubspot por CURL
+core = 7.x
+package= CDI INTERACTIVE

@@ -1,0 +1,117 @@
+<?php
+
+function seeing_blue_menu() {
+
+  $items = array();
+
+  $items['admin/config/system/seeing'] = array(
+    'title' => 'Seeing options',
+    'description' => 'Description of your On this date settings page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('seeing_blue_admin'),
+    'access arguments' => array('administer onthisdate settings'),
+    'type' => MENU_NORMAL_ITEM,
+   );
+
+  $items['seeing/get_articles_home'] = array(
+    'title' => 'Seeing options',
+    'description' => 'Description of your On this date settings page',
+    'page callback' => 'seeing_blue_home_get_article',
+    'page arguments' => array('seeing_blue_admin'),
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+   );
+
+  return $items;
+}
+
+function seeing_blue_home_get_article(){
+
+  $section = addslashes( $_REQUEST[ "section" ] );
+
+  //$nodes = node_load_multiple( array(), array( "type" => "article", "status" => "1" ) );
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->propertyCondition('status', 1)
+    ->propertyCondition('type', array('article'))
+    ->propertyOrderBy('created', 'DESC');
+  $nodes = $query->execute();
+
+  $term = taxonomy_term_load( $section );
+
+  $arrResult = array( );
+  $i=0;
+
+  $arrResult[ "ppal_link" ] = drupal_get_path_alias( "taxonomy/term/" . $term->tid );
+
+  foreach( $nodes[ "node" ] as $node ){
+
+    $node = node_load( $node->nid );
+
+    foreach( $node->field_categoria[ "und" ] as $item ){
+
+      if( $item[ "tid" ] == $section && $i < 3 ){
+
+        $arrResult[ $node->nid ][ "title" ] = $node->title;
+        $arrResult[ $node->nid ][ "image" ] = file_create_url( $node->field_thumbnail_small[ "und" ][ 0 ][ "uri" ] );
+        $arrResult[ $node->nid ][ "image_mobile" ] = file_create_url( $node->field_image_mobile[ "und" ][ 0 ][ "uri" ] );
+        $arrResult[ $node->nid ][ "text" ] = drupal_substr( $node->body["und"][0]["value"], 0, 50 );
+        $arrResult[ $node->nid ][ "link" ] = drupal_get_path_alias( "node/" . $node->nid );
+        $i++;
+
+      }
+
+    }
+
+  }
+
+  echo json_encode( $arrResult );
+
+}
+
+function seeing_blue_admin() {
+  $form = array();
+
+  $form['seeing_blue_logo_header'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Imagen logo header'),
+    '#default_value' => variable_get('seeing_blue_logo_header', ""),
+    '#size' => 90,
+    '#maxlength' => 90,
+    '#description' => t("Imagen para most popular home desktop"),
+    '#required' => TRUE,
+  );
+
+  $form['seeing_blue_logo_footer'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Imagen logo Footer'),
+    '#default_value' => variable_get('seeing_blue_logo_footer', ""),
+    '#size' => 90,
+    '#maxlength' => 90,
+    '#description' => t("Imagen para most popular home mobile"),
+    '#required' => TRUE,
+  );
+
+  $form['seeing_blue_file_most_popular'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Imagen Most popular'),
+    '#default_value' => variable_get('seeing_blue_file_most_popular', ""),
+    '#size' => 90,
+    '#maxlength' => 90,
+    '#description' => t("Imagen para most popular home mobile"),
+    '#required' => TRUE,
+  );
+
+  $form['seeing_blue_file_most_popular_mobile'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Imagen Most popular mobile'),
+    '#default_value' => variable_get('seeing_blue_file_most_popular_mobile', ""),
+    '#size' => 90,
+    '#maxlength' => 90,
+    '#description' => t("Imagen para most popular home mobile"),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}

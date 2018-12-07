@@ -1,0 +1,232 @@
+.wcu-category-block{
+	width: 100%;
+   	float: left;
+	margin-bottom: 70px;
+	article.content-principal{
+		.cont-description{
+			width: 100%;
+			padding: 20px 30px;
+			background: $gray-1;
+			border-top: 3px solid $blue-2;
+			float: left;
+			.description{
+				width: 60%;
+				float: left;
+				margin-right: 5%;
+				h2{
+					width: 100%;
+					float: left;
+					color: $span-title;
+					font-size: 36px;
+					letter-spacing: 2px;
+					text-align: left;
+				}
+				p{
+					float: left;
+					width: 100%;
+					margin-top: 10px;
+					font-family: $font-p;
+					font-size: 16px;
+					line-height: normal;
+					color: #fff;
+					font-weight: 300;
+				}
+			}
+			.content-likes{
+				width: 35%;
+				text-align: right;
+				margin-top: 20px;
+				> div{
+					float: none;
+					display: inline-block;
+				}
+				.field-link{
+					margin-top: 20px;
+				}
+			}
+		}
+	}
+	.cont-image{
+		width: 100%;
+		float: left;
+		img{
+			width: 100%;
+			height: auto;
+			&.image-mobile{
+				display: none;
+			}
+		}
+	}
+	
+	section{
+		header{
+			float: left;
+			width: 100%;
+			position: relative;
+			margin-bottom: 40px;
+			h2{
+				width: 100%;
+				float: left;
+				color: $blue-title;
+				font-size: 36px;
+				letter-spacing: 2px;
+				span{
+					width: 100%;
+    				float: left;
+					color: $span-title;
+				}
+			}
+			.line-title{
+				left: 0;
+				margin: 0;
+			}
+		}
+		form{
+			float: left;
+			width: 100%;
+			margin-bottom: 30px;
+		}
+		article{
+			margin-bottom: 25px;
+			&:last-child{
+				margin: 0;
+			}
+			.cont-image{
+				width: 40%;
+				position: relative;
+			}
+			.cont-description{
+				float: left;
+				width: 60%;
+				padding: 0 0 0 15px;
+				text-align: left;
+				h3{
+					width: 100%;
+					color: $blue-title;
+					font-family: $font-p;
+					font-size: 18px;
+					font-weight: 600;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+					word-wrap: break-word;
+					a{
+						color: inherit;
+						text-decoration: none;
+					}
+				}
+				.line{
+					float: left;
+					width: 30px;
+					height: 3px;
+					background: $blue-2;
+					margin: 10px 0;
+				}
+				p{
+					width: 100%;
+					margin: 0;
+					text-align: left;
+					font-family: $font-p;
+					font-size: 14px;
+					line-height: normal;
+					color: $gray-4;
+					font-weight: 300;
+					float: left;
+					a{
+						color: $blue-title;
+						font-weight: bold;
+					}
+				}
+			}
+		}
+	}
+	
+}
+
+@media (max-width: 990px){
+	.wcu-category-block section header{
+		margin-top: 45px;
+		h2{
+			text-align: center;
+		}
+		.line-title{
+			left: 50%;
+    		margin-left: -15px;
+		}
+	}
+	.wcu-category-block section form{
+		text-align: center;
+		> div{
+			float: none;
+			display: inline-block;
+		}
+	}
+}
+
+@media (max-width: 780px){
+	.wcu-category-block{
+		margin-bottom: 50px;
+		.container{
+			padding: 0;
+			> article{
+				padding: 0;
+				.cont-image{
+					img{
+						&.image-desktop{
+							display: none;
+						}
+						&.image-mobile{
+							display: block;
+						}
+					}
+				}
+				.cont-description{
+					padding: 20px 15px;
+					.content-likes{
+						width: 100%;
+						text-align: center;
+						.likes, .comments{
+							display: none;	
+						}
+					}
+					.description{
+						width: 100%;
+						text-align: center;
+						margin: 0;
+						h2{
+							font-size: 36px;
+							text-align: center;
+						}
+						.content-likes{
+							&.elem-mobile{
+								display: block;
+							}
+							.likes, .comments{
+								display: inline-block;
+							}
+							.field-link{
+								margin-top: 0;
+							}
+						}
+						p{
+							margin: 0;
+						}
+					}
+				}
+			}
+		}
+		section article{
+			.cont-image{
+				width: 45%;
+			}
+			.cont-description{
+				width: 55%;
+				h3{
+					font-size: 18px;	
+				}
+				p{
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

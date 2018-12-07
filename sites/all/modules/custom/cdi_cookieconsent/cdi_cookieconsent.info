@@ -1,0 +1,6 @@
+name = Cdi Cookie consent
+description = Implements control over tracking scripts and cookies for compliance with the EU General Data Protection Regulation.
+core = 7.x
+configure = admin/config/people/cdi-cookieconsent
+version = "7.x-1.0"
+

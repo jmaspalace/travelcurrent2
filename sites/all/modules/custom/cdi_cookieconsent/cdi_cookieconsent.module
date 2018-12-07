@@ -1,0 +1,176 @@
+<?php
+/**
+ * @file
+ * cdi_cookieconsent.module
+ *
+ */
+
+
+define('CDICOOKIE_HEADER', t('This site uses cookies'));
+define('CDICOOKIE_MESSAGE', t('We use cookies to provide you a more personalized experience. This includes content and ads. You consent to our cookies if you continue to use this website.'));
+define('CDICOOKIE_DISMISS', t('Got it!'));
+define('CDICOOKIE_ALLOW', t('Allow cookies'));
+define('CDICOOKIE_LINK', t('Learn more'));
+define('CDICOOKIE_REVOKE', t('Cookie policy'));
+define('CDICOOKIE_HREF', 'https://www.palaceresorts.com/en/terms');
+
+
+/**
+ * Implements hook_menu().
+ */
+function cdi_cookieconsent_menu() {
+  $items['admin/config/people/cdi-cookieconsent'] = array(
+    'title' => t('CDI Cookie consent'),
+    'description' => t('Control what trackingg scripts and cookies should be included acording to GDPR'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cdi_cookieconsent_admin_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'cdi_cookieconsent.admin.inc',
+  );
+
+  $items['log/cdi-cookieconsent'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'cdi_cookieconsent_ajax_calback',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_variable_info().
+ */
+function cdi_cookieconsent_variable_info($options) {
+  
+  $variable['cdi_cookieconsent_header'] = array(
+    'type' => 'string',
+    'title' => t('Head Consent title'),
+    'default' => CDICOOKIE_HEADER,
+    'description' => t('The title on the top of the popup box.'),
+    'localize' => TRUE,
+  );
+
+  $variable['cdi_cookieconsent_message'] = array(
+    'type' => 'string',
+    'title' => t('Consent messagge'),
+    'default' => CDICOOKIE_MESSAGE,
+    'description' => t('A short message requesting consent to use cookies on this site.'),
+    'localize' => TRUE,
+  );
+
+  $variable['cdi_cookieconsent_dismiss'] = array(
+    'type' => 'string',
+    'title' => t('Dismiss cookie button text'),
+    'default' => CDICOOKIE_DISMISS,
+    'localize' => TRUE,
+  );
+
+  $variable['cdi_cookieconsent_allow'] = array(
+    'type' => 'string',
+    'title' => t('Allow cookie button text'),
+    'default' => CDICOOKIE_ALLOW,
+    'localize' => TRUE,
+  );
+
+  $variable['cdi_cookieconsent_link'] = array(
+    'type' => 'string',
+    'title' => t('Read more button text'),
+    'description' => t('The text shown on the link to the cookie policy.'),
+    'default' => CDICOOKIE_LINK,
+    'localize' => TRUE,
+  );
+
+  $variable['cdi_cookieconsent_revoke'] = array(
+    'type' => 'string',
+    'title' => t('Revoke button text'),
+    'default' => CDICOOKIE_REVOKE,
+    'localize' => TRUE,
+  );
+
+  $variable['cdi_cookieconsent_href'] = array(
+    'type' => 'string',
+    'title' => t('Cookie policy link'),
+    'description' => t('If you already have a cookie policy, link to it here.'),
+    'default' => CDICOOKIE_HREF,
+  );
+  
+  return $variable;
+}
+
+/**
+ * Callback function to register the user consent
+ */
+function cdi_cookieconsent_ajax_calback() {
+
+  $consent_status = (isset($_POST['consent']) && $_POST['consent'] == 'allow')? 'allow' : 'deny';
+  $ip = ($consent_status === 1)? ip_address() : '--';
+  $country = isset($_SERVER['GEOIP_COUNTRY_CODE'])? $_SERVER['GEOIP_COUNTRY_CODE'] : '--';
+
+  $cid = db_insert('cdi_cookieconsent_tracking')
+    ->fields( array(
+      'status' => $consent_status,
+      'ip' => $ip,
+      'country' => $country,
+      'date' => format_date(time(), 'custom', 'Y-m-d H:i:s')
+    ))
+    ->execute();
+
+    drupal_json_output(array(
+      'status' => !empty($cid)? 'ok' : 'fail',
+    ));
+}
+
+/**
+ * Implements theme_preprocess_page()
+ */
+function cdi_cookieconsent_page_alter (&$page)
+{
+  if (path_is_admin(current_path()) === FALSE) {
+    global $base_url;
+    drupal_add_css(drupal_get_path('module', 'cdi_cookieconsent') . '/css/cookieconsent.min.css', array(
+      'type' => 'file',
+    ));
+
+    $data_layer = array(
+      '#theme' => 'html_tag',
+      '#tag' => 'script',
+      '#attributes' => array(
+        'type' => 'text/javascript', 
+      ),
+      '#value' => '(function(w,l){w[l]=w[l]||[];})(window,"dataLayer");',
+      '#weight' => '-99999',
+    );
+    drupal_add_html_head($data_layer, 'data_layer');
+    
+    $revokeBtn = variable_get('cdi_cookieconsent_revoke', CDICOOKIE_REVOKE);
+
+    drupal_add_js(array(
+      'cdicookie' => array(
+        'gtm_id' => variable_get('cdi_cookieconsent_gtm', ''),
+        'ensighten_url' => variable_get('cdi_cookieconsent_ensighten', ''),
+        'header' => variable_get('cdi_cookieconsent_header', CDICOOKIE_HEADER),
+        'message' => variable_get('cdi_cookieconsent_message', CDICOOKIE_MESSAGE),
+        'dismiss' => variable_get('cdi_cookieconsent_dismiss', CDICOOKIE_DISMISS),
+        'allow' => variable_get('cdi_cookieconsent_allow', CDICOOKIE_ALLOW),
+        'revoke' => $revokeBtn,
+        'link' => variable_get('cdi_cookieconsent_link', CDICOOKIE_LINK),
+        'href' => variable_get('cdi_cookieconsent_href', CDICOOKIE_HREF),
+        'country' => isset($_SERVER['GEOIP_COUNTRY_CODE'])? $_SERVER['GEOIP_COUNTRY_CODE'] : 'US',
+        'callUrl' => url('/log/cdi-cookieconsent', array(
+          'absolute'=>TRUE
+        )),
+      )
+    ), 'setting');
+    
+    drupal_add_js(drupal_get_path('module', 'cdi_cookieconsent') . '/js/cookieconsent.min.js', array(
+      'type' => 'file',
+      'scope' => 'header',
+      'every_page' => TRUE,
+    ));
+    drupal_add_js(drupal_get_path('module', 'cdi_cookieconsent') . '/js/cdi_cookieconsent.js', array(
+      'type' => 'file',
+      'scope' => 'header',
+      'every_page' => TRUE,
+    ));
+  }
+}

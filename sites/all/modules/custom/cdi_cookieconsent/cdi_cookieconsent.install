@@ -1,0 +1,75 @@
+<?php
+
+/**
+ * @file
+ * The install and update code for the cdi_sitemap module.
+ *
+ * @ingroup cdi_sitemap
+ */
+
+/**
+ * Implements hook_schema()
+ */
+function cdi_cookieconsent_schema() {
+  $schema['cdi_cookieconsent_tracking'] = array(
+    'description' => 'The base table for cookie consent tracking.',
+    'fields' => array(
+      'cid' => array(
+        'description' => 'The primary identifier for a consent.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE
+      ),
+      'status' => array(
+        'description' => 'coockie consent status',
+        'type' => 'varchar',
+        'length' => 8,
+        'not null' => TRUE,
+      ),
+      'ip' => array(
+        'description' => 'The user ip  (registered only if allow consent).',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '--'
+      ),
+      'country' => array(
+        'description' => 'The user country.',
+        'type' => 'varchar',
+        'length' => 4,
+        'not null' => TRUE,
+      ),
+      'date' => array(
+        'description' => 'The date of consent.',
+        'type' => 'varchar',
+        'mysql_type' => 'datetime',
+        'not null' => TRUE,
+      ),  
+    ),
+    'indexes' => array(
+      'consent_date' => array(
+        'date',
+      ),
+      'consent_country' => array(
+        'country',
+      ),
+      'consent_status' => array(
+        'status',
+      ),
+    ),
+    'primary key' => array('cid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function cdi_cookieconsent_uninstall() {
+  db_delete('variable')
+    ->condition('name', db_like('cdi_cookieconsent_') . '%', 'LIKE')
+    ->execute();
+
+  drupal_uninstall_schema('cdi_cookieconsent_tracking');
+}

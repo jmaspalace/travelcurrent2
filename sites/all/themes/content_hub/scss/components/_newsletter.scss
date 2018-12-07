@@ -1,0 +1,338 @@
+.block-newsletter{
+	float: left;
+    width: 100%;
+    background: $blue-3;
+	position: relative;
+	#close-news-block{
+		top: 15px;
+		right: 25px;
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		background: url(../images/close-search.png) no-repeat center -24px;
+    	background-size: 100%;
+		background-color: #fff;
+		border-radius: 50%;
+		display: none;
+		cursor: pointer;
+	}
+	> div{
+		> h2, .submitted{
+			display: none;
+		}
+	}
+	.content{
+		width: 1170px;
+		padding: 15px 15px;
+		display: block;
+		margin: 0 auto;
+		text-align: center;
+		> .field-type-image{
+			position: absolute;
+			width: 45%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			overflow: hidden;
+			img{
+				position: absolute;
+				right: -100px;
+				top: 0;
+				height: 100%;
+				width: auto;
+			}
+		}
+		> .field-name-field-texto-intro{
+			width: 500px;
+    		right: 55%;
+			position: absolute;
+			font-size: 22px;
+			letter-spacing: 1px;
+			font-family: $font-ar;
+			line-height: 32px;
+    		text-align: left;
+			color: #fff;
+			padding: 5px 120px 0 50px;
+		}
+		#webform-client-form-39{
+			width: 100%;
+    		display: inline-block;
+			> div{
+				width: 55%;
+				float: right;
+				margin: 0 auto;
+				text-align: center;
+				position: relative;
+  				max-width: 555px;
+				.form-item, .form-actions{
+					width: auto;
+					margin: 0;
+					padding: 0;
+					position: relative;
+					float: left;
+				}
+				.form-item{
+					color: #fff;
+					width: 100%;
+					text-align: left;
+					font-size: 1.6rem;
+					margin-bottom: 4px;
+					p{
+						margin-bottom: 0;
+					}
+					label{
+						display: none;
+						position: absolute;
+						width: 200px;
+						height: 50px;
+						background: #e9434e;
+						left: 50%;
+						top: -50px;
+						margin-left: -100px;
+						color: #fff;
+						font-size: 14px;
+						font-weight: 300;
+						padding: 16px;
+						opacity: 0;
+						span{
+							width: 8px;
+							height: 8px;
+							position: absolute;
+							bottom: -4px;
+							left: 50%;
+							margin-left: -4px;
+							background: #e9434e;
+							-ms-transform: rotate(7deg);
+							-webkit-transform: rotate(7deg);
+							transform: rotate(45deg);
+						}
+					}
+					&.webform-component-checkboxes{
+						.description{
+							font-size: 1em;
+							display: inline-block;
+							vertical-align: top;
+							a{
+								font-size: 1.6rem;
+  								color: #fff;
+							}
+						}
+						input{
+							margin: 5px 6px 0 0;
+    						vertical-align: top;
+						}
+						.form-checkboxes{
+							display: inline-block;
+  							vertical-align: middle;
+						}
+					}
+					
+					&.webform-component--title{
+						width: 100%;
+						color: #fff;
+						font-size: 18px;
+						font-weight: bold;
+						text-align: left;
+						vertical-align: middle;
+						float: left;
+						span{
+							font-weight: 200;
+						}
+					}
+				}
+				.webform-component-textfield{
+					input[type="text"]{
+						margin-bottom: 10px;
+  						width: 82%;
+					}
+				} 
+				input[type="text"]{
+					border: 1px solid #fff!important;
+					background: none;
+					height: 36px;
+					padding: 10px;
+					color: #fff;
+				}
+				.form-actions{
+					position: absolute;
+					right: 0;
+					top: 26px;
+					input[type=submit]{
+						background: $gray-2;
+						height: 36px;
+						border: 0;
+						margin-left: 5px;
+						padding: 5px 25px;
+						font-size: 14px;
+						font-weight: 300;
+						text-transform: uppercase;
+						transition: all .5s ease;
+						color: #fff;
+						&:hover{
+							background: #fff;
+							color: $gray-2;
+							font-weight: 500;
+						}
+					}	
+				}
+			}
+		}
+	}
+}
+
+.node-type-basic-page-with-file{
+	article{
+		text-align: center;
+    	margin-bottom: 90px;
+		picture, img{
+			width: 100%;
+			float: left;
+		}
+		.body-article{
+			width: 100%;
+			float: left;
+			margin: 40px 0 10px;
+			.container{
+				.col-md-7{
+					float: none;
+					display: block;
+					margin: 0 auto;
+					h1, h2, p{
+						width: 100%;
+						float: left;
+						margin-bottom: 10px;
+						text-align: center;
+					}
+					h1, h2{
+						letter-spacing: 1px;
+					}
+					h1{
+						font-size: 18px;
+						color: $blue-title;
+					}
+					h2{
+						color: $blue-1;
+						font-size: 26px;
+					}
+				}
+			}
+		}
+		footer{
+			display: inline-block;
+		}
+	}
+}
+
+
+@media (max-width: 1200px){
+	.block-newsletter .content{
+		width: 970px;
+		> .field-name-field-texto-intro {
+			width: 450px;
+			font-size: 22px;
+			line-height: 28px;
+			padding: 5px 80px 0 50px;
+		}
+		#webform-client-form-39 > div{
+			padding-left: 20px;
+			.form-item{
+				width: 70%;
+				input[type="text"]{
+					width: 100%;
+				}
+			}
+		}	
+	}
+}
+
+
+@media (max-width: 992px){
+	.block-newsletter .content{
+		width: 100%;
+		padding: 0 0 15px;
+		> .field-type-image{
+			display: none;
+		}
+		> .field-name-field-texto-intro{
+			position: relative;
+			width: 100%;
+			height: auto;
+			right: auto;
+			overflow: auto;
+			display: inline-block;
+			padding: 20px 15px;
+			background: #3b7ca3;
+			.field-item{
+				width: 100%;
+				max-width: 600px;
+				display: block;
+				float: none;
+				margin: 0 auto;
+			}
+		}
+		#webform-client-form-39 > div{
+			width: 100%;
+			max-width: 600px;
+			float: none;
+			padding: 0;
+			margin-top: 10px;
+    		.form-item.webform-component--title{
+
+			}
+			input[type="text"]{
+				width: 100%;
+			}
+			.form-actions{
+				width: 25%;
+				margin-left: 5%;
+				input[type=submit]{
+					width: 100%;
+					margin: 0;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 640px){
+	.block-newsletter .content{
+		> .field-name-field-texto-intro{
+			font-size: 22px;
+    		line-height: 22px;
+			padding: 15px;
+			display: none;
+			.field-item{
+				max-width: 300px;
+			}
+		}
+		#webform-client-form-39 > div{
+			max-width: 550px;
+			padding: 15px;
+			margin-bottom: 10px;
+    		width: 100%;
+			.form-item.webform-component--title{
+				font-size: 15px;
+			}
+			.form-item{
+				width: 100%;
+				&.webform-component-textfield input[type="text"]{
+					right: 15px;
+					top: 37px;
+					width: 71%;
+				}
+			}
+			.form-actions{
+				width: 26.5%;
+				margin: 0;
+				top: 36px;
+				right: 15px;
+				position: absolute;
+				input[type=submit]{
+					width: 100%;
+					padding: 5px;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,149 @@
+/*FLEXSLIDER*/
+.flexslider{
+	margin: 0;
+	border: 0;
+	.slides{
+		margin: 0;
+		padding: 0;
+		li{
+			position:relative;
+			.views-field-field-banner-desktop{
+				display:block;
+			}
+			.views-field-field-banner-mobile{
+				display:none;
+			}
+			.views-field-field-link{
+				position: absolute;
+				top: 60%;
+				left: 50%;
+				width: $grid-width;
+				margin-left: -$grid-width/2;
+				padding: 0 15px;
+				.field-content{
+					width: 48%;
+    				float: right;
+					a{
+						min-width: 200px;
+						padding: 14px 10px 12px;
+						background: #fff;
+						color: $blue-button;
+						text-transform: uppercase;
+						text-decoration: none;
+						text-align: center;
+						float: left;
+						font-family: $font-mb;
+						font-size: 16px;
+						&:hover{
+							color: #fff;
+							background: $gray-1;
+						}
+					}
+				}
+			}
+			.views-field-field-button-position{
+				display: none;
+			}
+			&.center{
+				.views-field-field-link{
+					top: 55%;
+					.field-content{
+						width: 100%;
+    					text-align: center;
+						a{
+							float: none;
+    						display: inline-block;
+						}
+					}
+				}
+			}
+			&.left{
+				.views-field-field-link{
+					top: 60%;
+					.field-content{
+						width: 50%;
+						float: left;
+						a{
+							float: right;
+						}
+					}
+				}
+			}
+		}
+	}
+	.flex-control-nav{
+		position: relative;
+    	bottom: 0;
+		height: auto;
+    	margin: 20px 0;
+		li{
+			margin: 0 3px;
+			a{
+				width: 17px;
+				height:17px;
+				background:$gray-1;
+				border: 2px solid #fff;
+				box-shadow: none;
+				&:hover, &.flex-active{
+					background: none;
+					border: 2px solid $gray-1;
+				}
+			}
+		}
+
+	}
+	.flex-direction-nav{
+		bottom: 55%;
+		z-index: 99;
+		top: initial;
+		position: absolute;
+		width: 100%;
+		li{
+			a{
+				display: none;
+				&.flex-prev{
+					left: 50px;
+				}
+				&.flex-next{
+					right: 50px;
+				}
+				&:before{
+					display: none;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 1200px){
+	.flexslider .slides li .views-field-field-link{
+		width: 100%;
+		margin-left: 0;
+    	left: 0;
+	}
+}
+
+@media (max-width: 780px){
+	.flexslider .slides li .views-field-field-banner-mobile{
+		display: block;
+	}
+	.flexslider .slides li .views-field-field-banner-desktop{
+		display: none;
+	}
+	.flexslider .slides li{
+		&.left, &.center, &.right{
+			.views-field-field-link{
+				top: 65%;
+				.field-content{
+					width: 100%;
+					text-align: center;
+					a{
+						float: none;
+						display: inline-block;
+					}
+				}
+			}	
+		}
+	}
+}
+/*FIN FLEXSLIDER*/

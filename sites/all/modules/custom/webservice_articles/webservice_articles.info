@@ -1,0 +1,10 @@
+name = Web Service Articles
+description = Modulo a la medida para publicar un webservice
+core = 7.x
+configure = admin/config/system/webservice
+
+; Information added by Drupal.org packaging script on 2015-10-07
+version = "1.0"
+core = "7.x"
+package = Custom
+datestamp = "1444232655"

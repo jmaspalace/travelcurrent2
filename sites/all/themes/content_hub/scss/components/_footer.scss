@@ -1,0 +1,238 @@
+footer.footer{
+  	width: 100%;
+	float:left;
+	background-color: $gray-1;
+	background-image: url(../images/bg-footer.jpg);
+	background-size: 100%;
+	background-repeat: repeat-y;
+	border-top: 3px solid $blue-2;
+	.container{
+		.content{
+			width: 90%;
+			height: 232px;
+			margin: 0 auto;
+			display: block;
+		}
+		.block-footer{
+			float: left;
+			width: 20%;
+			height: 100%;
+			padding: 0;
+			background-color: $gray-1;
+			padding-top: 45px;
+			padding-bottom: 45px;
+			&:first-child{
+				width: 16%;
+				border: 0;
+				ul{
+					border: 0;
+				}
+			}
+			&:nth-child(4n){
+				width: 24%;
+			}
+			.block-title{
+				width: 100%;
+				float: left;
+				margin-bottom: 20px;
+				padding: 0 10px 0 50px;
+				a{
+					font-size: 16px;
+					font-weight: 400;
+					float: left;
+				}
+			}
+			ul{
+				float: left;
+				width: 100%;
+				height: 80px;
+				position: relative;
+				padding: 0 15px 0 50px;
+				border-left: 1px solid #38404d;
+				li.block-title{
+					padding: 0;
+    				margin-top: 22px;
+				}
+			}
+			a{
+				font-size: 13px;
+				font-weight: 300;
+				color: $blue-1;
+				text-decoration: none;
+				&:hover{
+					color: #fff;
+				}
+			}
+			
+			&.block-shares{
+				background-color: #252B37;
+				.block-title{
+					padding-right: 0;
+					text-align: center;
+					a{
+						width: 100%;
+						img{
+							width: 80%;
+							height: auto;
+							display: inline-block;
+						}
+					}
+				}
+				ul{
+					height: auto;
+					border: 0;
+					padding: 0;
+					padding-bottom: 10px;
+					border-bottom: 1px solid #38404d;
+					margin-top: 15px;
+					li{
+						width: 22px;
+						height: 22px;
+						float: left;
+						margin-right: 10px;
+						a{
+							width: 100%;
+							height: 100%;
+							float: left;
+							text-indent: 150%;
+							text-align: 50px;
+							overflow: hidden;
+							&.icon-twt{
+								background: url(../images/share-twt-1.png);
+								background-size: 100%;
+								background-position: center top;
+							}
+							&.icon-fb{
+								background: url(../images/share-fb-1.png);
+								background-size: 100%;
+								background-position: center top;
+							}
+							&.icon-yt{
+								background: url(../images/share-yt-1.png);
+								background-size: 100%;
+								background-position: center top;
+							}
+							&.icon-ig{
+								background: url(../images/share-ig-1.png);
+								background-size: 100%;
+								background-position: center top;
+							}
+							&.icon-pt{
+								background: url(../images/share-pt-1.png);
+								background-size: 100%;
+								background-position: center top;
+							}
+							&:hover{
+								background-position: center bottom;
+							}
+						}
+						&:last-child{
+							margin: 0;
+						}
+					}
+				}
+				img.sponsered {
+					display: inline-block;
+					margin: 10px auto 0;
+				}
+			}
+		}
+	}
+	.legal{
+		text-align:center;
+		padding: 20px 0;
+		background: $gray-2;
+		small{
+			font-size:11px;
+			color: $blue-1;
+			padding: 0 10px;
+			border-right: 1px solid #2b3a49;
+			line-height: 10px;
+			&:last-child{
+				border:0;
+			}
+			span{
+				color: $blue-2;
+			}
+		}
+	}
+}
+
+@media (max-width: 1200px){
+	footer.footer .container .content{
+		width: 100%;
+	}
+	footer.footer .container .block-footer.block-shares ul li{
+		margin-right: 8px;
+	}
+	footer.footer .container .block-footer.block-shares{
+		.block-title{
+			padding-left: 40px;	
+		}
+	}
+}
+
+@media (max-width: 990px){
+	footer.footer{
+		background: $gray-1;
+	}
+	footer.footer .container .content{
+		height: auto;
+		float: left;
+	}
+	footer.footer .container .block-footer{
+		display: none;
+		&.block-shares{
+			display: block;
+			width: 100%;
+			background: none;
+			text-align: center;
+			padding: 30px 0;
+			.block-title{
+				padding: 0;
+				margin: 0;
+				width: 220px;
+				display: inline-block;
+				float: none;
+				a{
+					float: none;
+    				display: inline-block;
+					img{
+						width: 160px;
+    					height: auto;
+					}
+				}
+			}
+			ul{
+				text-align: center;
+				height: auto;
+				li{
+					width: 30px;
+    				height: 30px;
+					float: none;
+    				display: inline-block;
+				}
+			}
+			img.sponsered{
+				margin: 25px auto 0;
+			}
+		}
+	}
+}
+
+@media (max-width: 780px){
+	footer.footer .legal{
+		float: left;
+		width: 100%;
+	}
+	footer.footer .legal small{
+		font-size: 12px;
+		width: 100%;
+		float: left;
+		margin-bottom: 8px;
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+}
+	

@@ -1,0 +1,171 @@
+<?php
+
+function webservice_articles_menu() {
+
+  $items = array();
+
+  $items['webservice/get_articles'] = array(
+    'title' => 'Seeing options',
+    'description' => 'List Articles json',
+    'page callback' => 'get_articles',
+    'access callback' => TRUE
+  );
+
+  $items['webservice/get_articles_nat'] = array(
+    'title' => 'Seeing options',
+    'description' => 'List Articles json',
+    'page callback' => 'get_articles_nat',
+    'access callback' => TRUE
+  );
+
+  return $items;
+}
+
+function get_articles(){
+
+  // $section = addslashes( $_REQUEST[ "section" ] );
+
+  // //$nodes = node_load_multiple( array(), array( "type" => "article", "status" => "1" ) );
+  drupal_flush_all_caches();
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->propertyCondition('status', 1)
+    ->propertyCondition('type', array('article'))
+    ->propertyOrderBy('created', 'DESC');
+  $nodes = $query->execute();
+
+  $array_nodes = array();
+  foreach( $nodes[ "node" ] as $node ){
+    $node_data      = node_load($node->nid);
+    $array_nodes[]  = array(
+                    'nid'  => $node_data->nid
+                    ,'title'  => $node_data->title
+                    ,'path'  => drupal_get_path_alias('node/'.$node->nid)
+                    ,'field_title_highlighted' => $node_data->field_title_highlighted["und"]["0"]["value"]
+                    ,'field_summary'  => array(
+                                          "field_subtitle" =>   $node_data->field_summary["und"]["0"]["field_subtitle"]["und"]["0"]["value"]
+                                          ,"field_description_1" =>  $node_data->field_summary["und"]["0"]["field_description_1"]["und"]["0"]["value"]
+                                        )
+                    ,'field_summary'  => array(
+                                          "field_subtitle" =>   $node_data->field_summary["und"]["0"]["field_subtitle"]["und"]["0"]["value"]
+                                          ,"field_description_1" =>  $node_data->field_summary["und"]["0"]["field_description_1"]["und"]["0"]["value"]
+                                        )
+                    ,'field_image' => array(
+                                          "uri"     => file_create_url($node_data->field_image["und"]["0"]["uri"])
+                                          ,"alt"    => $node_data->field_image["und"]["0"]["alt"]
+                                          ,"title"  => $node_data->field_image["und"]["0"]["title"]
+                                        ) 
+                    ,'field_image_mobile' => array(
+                                          "uri"     => file_create_url($node_data->field_image_mobile["und"]["0"]["uri"])
+                                          ,"alt"    => $node_data->field_image_mobile["und"]["0"]["alt"]
+                                          ,"title"  => $node_data->field_image_mobile["und"]["0"]["title"]
+                                        )
+                    ,'field_written_by' => $node_data->field_written_by["und"]["0"]["value"]
+                    ,'field_date'       => $node_data->field_date["und"]["0"]["value"]
+                    ,'body'             => $node_data->body["und"]["0"]["value"]
+                    ,'field_gallery'   => array(
+                                          "field_video" =>   $node_data->field_gallery["und"]["0"]["field_video"]["und"]["0"]["input"]
+                                          ,"field_image" =>  array(
+                                            "uri"     => file_create_url($node_data->field_gallery["und"]["0"]["field_image"]["und"]["0"]["uri"])
+                                            ,"alt"    => $node_data->field_gallery["und"]["0"]["field_image"]["und"]["0"]["alt"]
+                                            ,"title"  => $node_data->field_gallery["und"]["0"]["field_image"]["und"]["0"]["title"]
+                                          )
+                                          ,"field_image_mobile" =>  array(
+                                            "uri"     => file_create_url($node_data->field_gallery["und"]["0"]["field_image_mobile"]["und"]["0"]["uri"])
+                                            ,"alt"    => $node_data->field_gallery["und"]["0"]["field_image_mobile"]["und"]["0"]["alt"]
+                                            ,"title"  => $node_data->field_gallery["und"]["0"]["field_image_mobile"]["und"]["0"]["title"]
+                                          ) 
+                                        )
+                    ,'field_gallery_left_image' => array(
+                                                    "field_image" =>  array(
+                                                    "uri"     => file_create_url($node_data->field_gallery_left_image["und"]["0"]["field_image"]["und"]["0"]["uri"])
+                                                    ,"alt"    => $node_data->field_gallery_left_image["und"]["0"]["field_image"]["und"]["0"]["alt"]
+                                                    ,"title"  => $node_data->field_gallery_left_image["und"]["0"]["field_image"]["und"]["0"]["title"]
+                                                    )
+                                                  ) 
+                    ,'field_gallery_right_image' => array(
+                                                    "field_image" =>  array(
+                                                    "uri"     => file_create_url($node_data->field_gallery_right_image["und"]["0"]["field_image"]["und"]["0"]["uri"])
+                                                    ,"alt"    => $node_data->field_gallery_right_image["und"]["0"]["field_image"]["und"]["0"]["alt"]
+                                                    ,"title"  => $node_data->field_gallery_right_image["und"]["0"]["field_image"]["und"]["0"]["title"]
+                                                    )
+                                                  )
+                    ,'field_description_1'        => $node_data->field_description_1["und"]["0"]["value"]
+                    ,'field_paragraph_subtitle'   => array(
+                        "field_subtitle"        =>$node_data->field_paragraph_subtitle["und"]["0"]["field_subtitle"]["und"]["0"]["value"]
+                        ,"field_description_1"  =>$node_data->field_paragraph_subtitle["und"]["0"]["field_description_1"]["und"]["0"]["value"]
+                    )
+                    ,'field_paragraph_subtitle_2'   => array(
+                        "field_subtitle"        =>$node_data->field_paragraph_subtitle_2["und"]["0"]["field_subtitle"]["und"]["0"]["value"]
+                        ,"field_description_1"  =>$node_data->field_paragraph_subtitle_2["und"]["0"]["field_description_1"]["und"]["0"]["value"]
+                    )
+                    ,'field_paragraph_subtitle_3'   => array(
+                        "field_subtitle"        =>$node_data->field_paragraph_subtitle_3["und"]["0"]["field_subtitle"]["und"]["0"]["value"]
+                        ,"field_description_1"  =>$node_data->field_paragraph_subtitle_3["und"]["0"]["field_description_1"]["und"]["0"]["value"]
+                    )
+                    ,'field_paragraph_subtitle_4'   => array(
+                        "field_subtitle"        =>$node_data->field_paragraph_subtitle_4["und"]["0"]["field_subtitle"]["und"]["0"]["value"]
+                        ,"field_description_1"  =>$node_data->field_paragraph_subtitle_4["und"]["0"]["field_description_1"]["und"]["0"]["value"]
+                    )
+                    ,'field_location'   => array(
+                        "field_latitude"  => $node_data->field_location["und"]["0"]["field_latitude"]["und"]["0"]["value"]
+                        ,"field_longitude" => $node_data->field_location["und"]["0"]["field_longitude"]["und"]["0"]["value"]
+                    )
+                    ,'field_thumbnail_small' => array(
+                                          "uri"     => file_create_url($node_data->field_thumbnail_small["und"]["0"]["uri"])
+                                          ,"alt"    => $node_data->field_thumbnail_small["und"]["0"]["alt"]
+                                          ,"title"  => $node_data->field_thumbnail_small["und"]["0"]["title"]
+                                        ) 
+                    ,'field_thumbnail_medium' => array(
+                          "uri"     => file_create_url($node_data->field_thumbnail_medium["und"]["0"]["uri"])
+                          ,"alt"    => $node_data->field_thumbnail_medium["und"]["0"]["alt"]
+                          ,"title"  => $node_data->field_thumbnail_medium["und"]["0"]["title"]
+                        ) 
+                    ,'field_cover_image'    => array(
+                        "field_image" =>  array(
+                          "uri"     => file_create_url($node_data->field_cover_image["und"]["0"]["field_image"]["und"]["0"]["uri"])
+                          ,"alt"    => $node_data->field_cover_image["und"]["0"]["field_image"]["und"]["0"]["alt"]
+                          ,"title"  => $node_data->field_cover_image["und"]["0"]["field_image"]["und"]["0"]["title"]
+                        )
+                        ,"field_image_mobile" =>  array(
+                          "uri"     => file_create_url($node_data->field_cover_image["und"]["0"]["field_image_mobile"]["und"]["0"]["uri"])
+                          ,"alt"    => $node_data->field_cover_image["und"]["0"]["field_image_mobile"]["und"]["0"]["alt"]
+                          ,"title"  => $node_data->field_cover_image["und"]["0"]["field_image_mobile"]["und"]["0"]["title"]
+                        ) 
+
+                      ) 
+
+                    // ,'' => 
+                    );
+  }
+  //echo print_r( $array_nodes );
+  echo json_encode( $array_nodes, JSON_PRETTY_PRINT);
+
+}
+
+function get_articles_nat(){
+
+  // $section = addslashes( $_REQUEST[ "section" ] );
+
+  // //$nodes = node_load_multiple( array(), array( "type" => "article", "status" => "1" ) );
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->propertyCondition('status', 1)
+    ->propertyCondition('type', array('article'))
+    ->propertyOrderBy('created', 'DESC');
+  $nodes = $query->execute();
+
+  $array_nodes = array();
+  foreach( $nodes[ "node" ] as $node ){
+    $node_data        = node_load($node->nid);
+    $node_data->path2  = drupal_get_path_alias('node/'.$node->nid);
+    unset($node_data->field_tags);
+    unset($node_data->field_categoria);
+    unset($node_data->field_category);
+    unset($node_data->field_subcategoria);
+    $array_nodes[] = $node_data;
+  }
+  //echo print_r( $array_nodes );
+  echo json_encode( $array_nodes);
+
+}
